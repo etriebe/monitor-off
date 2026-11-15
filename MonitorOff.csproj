@@ -2,22 +2,28 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <!-- .NET Framework 4.8 ships with every Windows 10/11 install, so the exe runs with nothing extra to install. -->
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
-    <LangVersion>latest</LangVersion>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Needed for function-pointer hook callbacks and LibraryImport. -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <AssemblyName>MonitorOff</AssemblyName>
     <RootNamespace>MonitorOff</RootNamespace>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
     <Version>1.0.0</Version>
     <Product>Monitor Off</Product>
     <Description>Tray app that turns off all monitors until Esc is pressed.</Description>
+    <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
-  </ItemGroup>
+  <!-- `dotnet publish -c Release` produces one exe in bin\Release\net11.0-windows\win-x64\publish -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
 
 </Project>
